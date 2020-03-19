@@ -1,0 +1,478 @@
+part 0b - fundamentals of web apps
+
+First, the browser does a HTTP GET request to the server to fetch the HTML code of the page. 
+The img tag in the HTML prompts the browser to fetch the image kuva.png. 
+The browser renders the HTML page and the image to the screen.
+
+when entering the page the browser fetches the HTML doc 
+this can be static text or form the HTML doc dynamically as the website loads
+
+!DOCTYPE html>
+    <html>
+      <head>
+      </head>
+      <body>
+        <div class='container'>
+          <h1>Full stack example app</h1>
+          <p>number of notes created 57</p>
+          <a href='/notes'>notes</a>
+          <img src='kuva.png' width='200' />
+        </div>
+      </body>
+    </html>
+
+
+html of the website
+html has been saved as a template string or a string which allows
+for evaluating. the dynamically changing parts, the number of notes is replaced by current count
+
+using Node.js and Express to create websites
+
+open the notes app
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+  <script type="text/javascript" src="main.js"></script>
+</head>
+<body>
+  <div class='container'>
+    <h1>Notes</h1>
+    <div id='notes'>
+    </div>
+    <form action='/new_note' method='POST'>
+      <input type="text" name="note"><br>
+      <input type="submit" value="Save">
+    </form>
+  </div>
+</body>
+</html>
+
+html for that 
+
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+  <script type="text/javascript" src="main.js"></script>
+
+  ^ this shows how it is linking to another .js page with has more 
+  info about the site such as creating more detailed site 
+  used to spice up image and text
+
+
+  .js file 
+  var xhttp = new XMLHttpRequest()
+  
+xhttp.onreadystatechange = function () {
+  if (this.readyState == 4 && this.status == 200) {
+    const data = JSON.parse(this.responseText)
+    console.log(data)
+
+    var ul = document.createElement('ul')
+    ul.setAttribute('class', 'notes')
+
+    data.forEach(function(note){
+      var li = document.createElement('li')
+      
+      ul.appendChild(li);
+      li.appendChild(document.createTextNode(note.content))
+    })
+
+    document.getElementById("notes").appendChild(ul)
+  }
+}
+
+xhttp.open("GET", "/data.json", true)
+xhttp.send()
+^ this shows how it is getting the .json data 
+
+
+data.json file
+[{"content":"HTML is easy","date":"2019-05-23T17:30:31.098Z"}]
+^ this is what it looks like 
+this data is loaded on the .js file and then presented 
+
+
+The js code below is how the json data is added to the file 
+const data = JSON.parse(this.responseText)
+    console.log(data)
+
+    var ul = document.createElement('ul')
+    ul.setAttribute('class', 'notes')
+
+    data.forEach(function(note){
+      var li = document.createElement('li')
+      
+      ul.appendChild(li);
+      li.appendChild(document.createTextNode(note.content))
+    })
+
+
+var ul = document.createElement('ul')
+    ul.setAttribute('class', 'notes')
+^ creating an unordered list 
+
+    data.forEach(function(note){
+      var li = document.createElement('li')
+      
+      ul.appendChild(li);
+      li.appendChild(document.createTextNode(note.content))
+    })
+
+^ then it adds one li-tag for each note only the content field becomes 
+the actual content of the li-tag 
+
+li tag is an element in a list
+ 
+
+ const data = JSON.parse(this.responseText)
+    console.log(data)
+^ this is how the output comes in the console log
+
+var xhttp = new XMLHttpRequest()
+
+-----
+
+
+xhttp.onreadystatechange = function() {
+  // code that takes care of the server response
+}
+
+xhttp.open('GET', '/data.json', true)
+xhttp.send()
+
+the above code shows how the request is below the code, why is that
+that is because the code is first defired as a function, called 
+an event handler for the event onreadystatechange for the xhttp object
+
+the function will check the readyState and status of the http code
+if (this.readyState == 4 && this.status == 200) {
+    const data = JSON.parse(this.responseText)
+    console.log(data)
+
+^ here, so if the site is working and connected it can show the json data and modify it too
+
+
+
+HTML pages are implicit tree structures
+their order:
+html
+  head
+    link
+    script
+  body
+    div
+      h1
+      div
+        ul
+          li
+          li
+          li
+      form
+        input
+        input
+
+Document object model or DOM is an API which lets programming moidificiation
+of the element trees to the web pages
+API - apllication programming interface
+
+the javascript code used the dom api to add a list of notes to the page
+
+var ul = document.createElement('ul')
+
+data.forEach(function(note) {
+  var li = document.createElement('li')
+
+  ul.appendChild(li)
+  li.appendChild(document.createTextNode(note.content))
+})
+
+document.getElementById('notes').appendChild(ul)
+
+the ul variable connected to the place in the thml tree shown below
+<ul class="notes"><li>HTML is easy</li>
+
+top node in the DOM tree of an html document is called the document object
+
+type document in console to access it 
+putting stuff on the console will not update the site 
+the data is created using the info in the json file
+
+css
+the html had a link tag which fetches a css style sheet from main.css
+cascading style sheets - used to determine the apperance of the webpage
+
+main.css
+.container {
+  padding: 10px;
+  border: 1px solid
+}
+
+.notes {
+  color: blue;
+}
+
+this file defines two class selectors 
+.container and .notes 
+every class selector definition starts with . 
+classes are attributes which can be added to html elements
+
+as seen with div class= 'container'> ==0
+the ul tag holds the class notes 
+
+div class also has a id attribute, javascript uses this to find the element
+
+elements tab can be used to change the styles of the elements
+
+
+how the browser get the site 
+The browser fetches the HTML code defining the content and the structure of the page from the server using an HTTP GET request.
+Links in the HTML code cause the browser to also fetch the CSS style sheet main.css...
+...and a JavaScript code file main.js
+The browser executes the JavaScript code. The code makes an HTTP GET request to the address https://fullstack-exampleapp.herokuapp.com/data.json, which returns the notes as JSON data.
+When the data has been fetched, the browser executes an event handler, which renders the notes to the page using the DOM-API.
+
+---
+adding a new note 
+
+a note can be created with the form code that is in the site
+when you put submit it sends a request 
+get code 302 - URL redirect, does a new http get request
+gets the forms again which has the info from the files
+
+data is sent as a post request 
+
+AJAX - asynchronous javascript and xml 
+fethching of content to webpages using js in html without rendering the page
+
+
+Single page app
+when the code is all server side and only the needed html is rendered
+
+In recent years, the Single-page application (SPA) style of creating web-applications has emerged. 
+SPA style websites don't fetch all of their pages separately 
+from the server like our sample application does, 
+but instead comprises of only one HTML page fetched from the server, 
+the contents of which are manipulated with JavaScript that executes in the browser.
+
+the spa page is basically the same but it does have a different way to 
+send a get the note that we write, the json is sent in one go  
+
+this sends a http code 201 - created, no need for a redirect
+
+There are a lot of libraries one can use 
+Jquery - crossbrowser compatibility 
+angular js 
+react 
+vuejs
+
+full stack web dev
+all web applications have two layers
+browser: closed to the end user, top layer
+server, bottom layer 
+
+------------------------------------------------------------------
+
+0.1: HTML
+Review the basics of HTML by reading this tutorial from Mozilla: 
+HTML tutorial.
+
+HTML - Hypertext Markup Language
+code used to structure a web page and its content 
+it is not a programming language, markup language defines structure of the content 
+consists of a series of elements which enclose or wrap different parts
+
+ex 
+my cat is very grumpy 
+can be put as 
+<p> my cat is very grumpy </p>
+^ opening tag 
+</p> - closing tag 
+
+the stuff in the middle is the content 
+the while line is an element 
+elements can also have attributes 
+
+<p class="editor-note"> my cat is grumpt </p>
+
+An attribute should always have the following:
+
+A space between it and the element name (or the previous attribute, if the element already has one or more attributes).
+The attribute name followed by an equal sign.
+The attribute value wrapped by opening and closing quotation marks.
+
+Nesting elements 
+when an element is put inside other elements, such as making text bold
+
+<p> my cat is <strong> grumpy </strong> </p>
+
+empty element - when an element has not content 
+such as <img> element 
+
+there is not closing </img> tag or inner content 
+since there is no need to wrap the content 
+
+Anatomy of an html document 
+
+<!DOCTYPE html> - to make sure the code runs correctly 
+<html>  - wraps all the content in the page, root element 
+  <head> - acts as a container for all the stuff i want to inculde in the html page that isnt the content that is gonna show up, usually holds keywords, css info etc 
+    <meta charset="utf-8"> - these dont show to user, sets character set for the document 
+    <title>My test page</title> - title of the page appears in the browser tab 
+  </head>
+  <body>  - contains all the conent that will show in the webbrowser 
+    <img src="images/firefox-icon.png" alt="My test image">  
+  </body>
+</html>
+
+marking up text 
+
+heading elemtx allow us to specify content as headings or subheadings etc 
+html has 6 headings 
+<h1>-<h6>
+usually 3-4 are used 
+
+<p></p> - paragraph element 
+
+lists 
+there are two type of lists 
+ordered <ol>
+unordered <ul>
+these elements are put in the <li> (list item) element 
+
+links 
+<a> - called the anchor element used to add lists 
+making a list in a paragraph 
+
+<a> testing </a>
+<a href=""> testing </a>
+fill the "" with the link 
+<a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla Manifesto</a>
+
+href stands for Hypertext reference 
+
+-----------------------------------------------------------------
+css basics 
+css - cascading style sheets, code used to style the webpage 
+not really a programming language, its not a markup language either 
+its a style sheet language apply to elements in html docs 
+
+for example selecting paragraph elements 
+p{
+  color: red;
+}
+after making a .css file it needs to be attached to the html file 
+like so
+        <link href="styles/styles.css" rel="stylessheet">
+
+anatomy of a css ruleset 
+p {
+  color: red;
+}
+p - selector the html element which is to be syyled 
+color: - property, way the html can be styled 
+red - property value the apperance of the property that we choose 
+color: red; - declaration, specfifying which elements property needs to be styled
+
+each rule set is wrapped in {}
+: - used within each declaration to seperate property from its value
+; - to seperate each declaration from the next one 
+
+can select multiple elements like 
+p, li, h1 {
+  color: red;
+}
+
+for fonts one can use the link to get fonts.googleapi 
+
+/* */ - comments in css
+
+boxes are important in css
+padding 
+border and margins are important 
+
+padding, the space just around the content (e.g., around paragraph text).
+border, the solid line that sits just outside the padding.
+margin, the space around the outside of the element.
+
+width (of an element).
+background-color, the color behind an element's content and padding.
+color, the color of an element's content (usually text).
+text-shadow: sets a drop shadow on the text inside an element.
+display: sets the display mode of an element (don't worry about this yet).
+
+---------------------------------------------------------------
+web forms - one of the main points of interaction between user and website 
+allows entering of data which is then sent to a webserver for prosessing 
+
+made up of 
+one or more form controls or widgets
+often referred to as html forms, single or multi line text fields
+
+forms use <form> </form> element 
+Ok, let's have a go at creating the HTML for our form. 
+We will use the following HTML elements:
+ <form>, <label>, <input>, <textarea>, and <button>.
+
+action defines the location where the forms collected data should be sent
+method defines which http method to send the data with, usually get or post 
+
+then the form element is added to html 
+
+<form action="/my-handling-form-page" method="post">
+ <ul>
+  <li>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="user_name">
+  </li>
+  <li>
+    <label for="mail">E-mail:</label>
+    <input type="email" id="mail" name="user_mail">
+  </li>
+  <li>
+    <label for="msg">Message:</label>
+    <textarea id="msg" name="user_message"></textarea>
+  </li>
+  <li class="button">
+  <button type="submit">Send your message</button>
+</li>
+ </ul>
+</form>
+
+the html is done then use css to style the form page 
+
+------------------------------------------------------
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
+server-->browser: HTML-code
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+server-->browser: main.js
+
+note over browser:
+browser starts executing js-code
+that requests JSON data from server 
+end note
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
+
+have html for the note 
+browser send the note info to the json file 
+the page is refreshed 
+shows the note 
+
+-----------------------------------------------
+single page app
+
+browser gets the 
+html 
+css 
+and the json files at once 
+
+send the request recieve the data
