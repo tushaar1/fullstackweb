@@ -1,1 +1,88 @@
 a. Intro to react 
+
+npx create-react-app app.name 
+^ how to easily create a react app 
+then 
+cd part1
+npm start
+
+The code of the application resides in the src folder. 
+Let's simplify the default code such that the contents
+ of the file index.js look like:
+
+// the index.js now defines a react component named app 
+// ReactDOM.render(<App />, document.getElementById('root')); < this is a command
+// renders the app contents into a div element with the id value root 
+// By default, the file public/index.html is empty.
+// You can try adding some HTML into the file. 
+//However, when using React, all content that needs to be rendered is usually defined as React components.
+
+
+// the function defining the element may contain anykind of js code
+// can also render dynamic content in the component 
+// Any JavaScript code within the curly braces is evaluated and the result of this evaluation is embedded into the defined place in the HTML produced by the component.
+
+//the layout of react components are written using jsx, looks like html but is a way to write js 
+// complied into js, handeled by babel 
+// jsx is xml like where every tag needs to be closed
+// writing a new line is written like <br> in html
+// in jsx its <br />
+
+// <Hello /> can be called multiple times if needed 
+
+props - passing data to components
+kind of like passing arguments or using .format 
+first have the function defining component have a parameter props 
+then change the other code to reflect that 
+
+It is good to remember that in React it is possible and worthwhile to write console.log() commands (which print to the console) within your code.
+
+Also keep in mind that React component names must be capitalized.
+
+const Hello = (props) => {
+    return (
+        <div> 
+            <p>Hello {props.name}, you are {props.age} years old</p>
+        </div>
+    )
+}
+const App = () => {
+    const name = 'Peter'
+    const age = 10
+    return (
+        <div>
+            <h1>Greetings</h1>
+            <Hello name="maya" age={26+10}/> 
+            <Hello name="daisy"/>
+            <Hello name={name} age={age} />
+        </div>
+    )
+}
+
+
+
+const App = () => {
+    const course = "Half Stack application development"
+    const part1 = "Fundamentals of React"
+    const excerises1 = 10
+    const part2 = 'Using props to pass data'
+    const excerises2 = 7
+    const part3 = 'State of a compnent'
+    const excerises3 = 14
+
+    return (
+        <div>
+            <h1>{course}</h1>
+            <p>
+                {part1} {excerises1}
+            </p>
+            <p>
+                {part2} {excerises2}
+            </p>
+            <p>
+                {part3} {excerises3}
+            </p>
+            <p> Number of exercises {excerises1 + excerises2 + excerises3}</p>
+        </div>
+    )
+}
