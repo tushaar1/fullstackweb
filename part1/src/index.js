@@ -57,3 +57,48 @@ const App = () => {
 ReactDOM.render(<App />, document.getElementById('root'));
 
 
+//Objects
+
+//mutltiple ways to define objects in js, common way is object literals 
+//listing properties within braces  
+
+const object1 = {
+    name : 'Arto Hellas',
+    age: 35,
+    education: 'PhD'
+}
+
+// the values can be int, strings, arrays, objects 
+// properties of an object are referred by using dot notation or brackets
+console.log(object1.name)
+const fieldName = 'age'
+console.log(object1[fieldName])
+
+// can also add properties using dot notation or brackets
+object1.address = 'Helsinki'
+object1['secret number'] = 12341
+// ^^ if you are using one method stay cosistent
+
+// Functions
+// defining arrow function :
+
+const sum = (p1, p2) => {
+    console.log(p1)    
+    console.log(p2)
+    return p1 + p2
+}
+
+// this is like the def feature in python
+
+const result = sum(1, 5)
+console.log(result)
+
+// no need for () if its a single parameter
+
+const square = p => {
+    console.log(p)
+    return p * p
+}
+
+// then can be shortened
+// const square = p => p * p

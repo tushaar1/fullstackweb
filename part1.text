@@ -86,3 +86,67 @@ const App = () => {
         </div>
     )
 }
+
+
+
+part 1b - JavaScript
+
+an additon to websites, helps with making websites better.
+not all browsers support the newer features 
+most famous way to transpile with Babel, automatically configured 
+with create-react-app 
+node.js is a popular js runtime enviornment by google 
+
+.js filename is used 
+the code is ran by using node name_of_file.js
+ JavaScript != Java
+
+ Variables in js
+
+ const x = 1 
+ let y = 5 
+
+ const does not define a variable but a constant, a value which can
+ no longer be changed 
+
+ let defines a regular variable 
+
+ Arrays :
+
+ const t = [1. -1, 3]
+ even tho we use const for arrays the values can be modified 
+ array is an object the variable always points to the same object
+
+ can iterate over an array 
+ t.forEach()  - goes over each value in the array 
+
+ in js new items are added using push 
+ react uses functional programming 
+
+ using immutable data structures, use concat, does not add items to an array
+ but makes a new array where old and new values are included
+
+ const t = [1, -1, 3]
+ const t2 = t.concat(5)
+
+ map method 
+
+ const t = [1, 2, 3]
+ const m1 = t.map(value => value * 2)
+ const.log(m1)
+
+ creates a new array with the values multiplied by 2 
+ map can transform arrays to other things
+
+ can make it into one containing string of html 
+
+ Objects
+
+ mutltiple ways to define objects in js, common way is object literals 
+ listing properties within braces  
+
+ const object1 = {
+     name : 'Arto Hellas',
+     age: 35,
+     education: 'PhD
+ }
